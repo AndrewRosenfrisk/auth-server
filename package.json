@@ -1,6 +1,15 @@
 {
   "name": "auth-server",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "src/bin/www",
+  "scripts": {
+    "start": "node src/bin/www"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "pkginfo": "^0.4.1"
+  }
 }

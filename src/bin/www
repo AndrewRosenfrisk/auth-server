@@ -1,0 +1,20 @@
+// Module dependencies.
+
+const http = require("http");
+const app = require("../app");
+const config = require("../config");
+
+// Get port from environment and store in Express.
+
+const { host } = config.app;
+const { port } = config.app;
+app.set("port", port);
+
+// Create HTTP server.
+
+const server = http.createServer(app);
+
+// Listen on provided port, on all network interfaces.
+
+console.log(`app running -> ${host}:${port}`);
+server.listen(port);
