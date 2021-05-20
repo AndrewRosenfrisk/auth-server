@@ -11,10 +11,6 @@ const authService = new AuthService(User);
 module.exports = (routes) => {
   routes.use("/auth", router);
 
-  router.get("/", (req, res) => {
-    res.status(200).json({ status: "success", message: "get /auth" });
-  });
-
   router.post(
     "/register",
     celebrate({
