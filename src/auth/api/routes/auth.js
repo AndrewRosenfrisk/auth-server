@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { User } = require("../../models");
 const config = require("../../../config");
 const { AuthService } = require("../../services");
+const { authenticate } = require("../../middleware");
 
 const router = Router();
 const authService = new AuthService(User);
@@ -65,5 +66,14 @@ module.exports = (routes) => {
     } catch (err) {
       next(err);
     }
+  });
+
+  router.post("/logout", authenticate, (req, res) => {
+    res.clearCookie("refreshToken");
+
+    res.status(200).json({
+      status: "success",
+      message: "Logged Out!",
+    });
   });
 };
