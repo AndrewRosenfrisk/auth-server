@@ -6,6 +6,7 @@ const User = mongoose.model(
     {
       name: {
         type: String,
+        unique: true,
         require: true,
       },
       email: {
