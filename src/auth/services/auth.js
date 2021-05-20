@@ -51,14 +51,36 @@ module.exports = class AuthService {
           expiresIn: config.auth.accessToken.validity,
         }
       );
+      const refreshToken = jwt.sign(
+        tokenPayload,
+        config.auth.refreshToken.secret,
+        {
+          expiresIn: config.auth.refreshToken.validity,
+        }
+      );
 
       return {
         accessToken,
+        refreshToken,
       };
     } else {
       const err = new Error("Invalid login"); //bad password
       err.status = 400;
       throw err;
     }
+  }
+
+  static refresh(refreshToken) {
+    const user = jwt.verify(refreshToken, config.auth.refreshToken.secret);
+
+    const tokenPayload = {
+      email: user.email,
+    };
+
+    const accessToken = jwt.sign(tokenPayload, config.auth.accessToken.secret, {
+      expiresIn: config.auth.accessToken.validity,
+    });
+
+    return { accessToken };
   }
 };
