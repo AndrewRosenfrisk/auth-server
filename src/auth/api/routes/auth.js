@@ -25,4 +25,18 @@ module.exports = (routes) => {
       next(err);
     }
   });
+
+  router.post("/login", async (req, res, next) => {
+    try {
+      const { accessToken } = await authService.login(req.body);
+
+      res.status(200).json({
+        status: "success",
+        message: "User Logged In!",
+        accessToken,
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
 };

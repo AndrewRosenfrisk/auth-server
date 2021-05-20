@@ -1,5 +1,6 @@
 const argon = require("argon2");
 const config = require("../../config");
+const jwt = require("jsonwebtoken");
 
 module.exports = class AuthService {
   constructor(User) {
@@ -28,6 +29,36 @@ module.exports = class AuthService {
         name: user.name,
         email: user.email,
       };
+    }
+  }
+
+  async login(params) {
+    const user = await this.User.findOne({ email: params.email });
+
+    if (!user) {
+      const err = new Error("Invalid login"); //bad email
+      err.status = 400;
+      throw err;
+    } else if (await argon.verify(user.password, params.password)) {
+      const tokenPayload = {
+        email: user.email,
+      };
+
+      const accessToken = jwt.sign(
+        tokenPayload,
+        config.auth.accessToken.secret,
+        {
+          expiresIn: config.auth.accessToken.validity,
+        }
+      );
+
+      return {
+        accessToken,
+      };
+    } else {
+      const err = new Error("Invalid login"); //bad password
+      err.status = 400;
+      throw err;
     }
   }
 };
