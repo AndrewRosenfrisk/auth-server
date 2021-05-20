@@ -2,8 +2,9 @@
 const cors = require("cors");
 require("pkginfo")(module, "name");
 const express = require("express");
-const { isCelebrate } = require("celebrate");
+const { isCelebrateError } = require("celebrate");
 const cookieParser = require("cookie-parser");
+const config = require("./config");
 
 // App initialization
 const app = express();
@@ -26,7 +27,7 @@ app.use((req, res, next) => {
 // Error handler registration.
 
 app.use((err, req, res, next) => {
-  const status = isCelebrate(err) ? 400 : err.status || 500;
+  const status = isCelebrateError(err) ? 400 : err.status || 500;
   const message =
     config.app.env === "production" && err.status === 500
       ? "Something Went Wrong!"

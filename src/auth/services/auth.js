@@ -10,7 +10,8 @@ module.exports = class AuthService {
   // POST /REGISTER
   async register(params) {
     if (await this.User.findOne({ email: params.email })) {
-      const err = new Error("Invalid login").status(400); //Email already exists
+      const err = new Error("Invalid login"); //Email already exists
+      err.status = 400;
       throw err;
     } else {
       const user = await this.User.create({
