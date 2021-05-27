@@ -21,9 +21,7 @@ module.exports = {
         domain: process.env.HOST,
         secure: nodeEnv !== 'development',
         maxAge:
-          nodeEnv === 'development'
-            ? hoursToSeconds(hoursPerYear)
-            : hoursToSeconds(hoursPerWeek),
+          nodeEnv === 'development' ? hoursToSeconds(hoursPerYear) : hoursToSeconds(hoursPerWeek),
       },
     },
   },

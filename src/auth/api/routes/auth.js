@@ -47,11 +47,7 @@ module.exports = (routes) => {
       try {
         const { accessToken, refreshToken } = await authService.login(req.body);
 
-        res.cookie(
-          'refreshToken',
-          refreshToken,
-          config.auth.refreshToken.cookie.options,
-        );
+        res.cookie('refreshToken', refreshToken, config.auth.refreshToken.cookie.options);
 
         res.status(200).json({
           status: 'success',

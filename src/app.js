@@ -28,7 +28,8 @@ app.use((req, res, next) => {
 
 app.use((err, req, res) => {
   const status = isCelebrateError(err) ? 400 : err.status || 500;
-  const message = config.app.env === 'production' && err.status === 500 ? 'Something Went Wrong!' : err.message;
+  const message =
+    config.app.env === 'production' && err.status === 500 ? 'Something Went Wrong!' : err.message;
 
   if (status === 500) console.log(err.stack);
 

@@ -46,20 +46,12 @@ module.exports = class AuthService {
         email: user.email,
       };
 
-      const accessToken = jwt.sign(
-        tokenPayload,
-        config.auth.accessToken.secret,
-        {
-          expiresIn: config.auth.accessToken.validity,
-        },
-      );
-      const refreshToken = jwt.sign(
-        tokenPayload,
-        config.auth.refreshToken.secret,
-        {
-          expiresIn: config.auth.refreshToken.validity,
-        },
-      );
+      const accessToken = jwt.sign(tokenPayload, config.auth.accessToken.secret, {
+        expiresIn: config.auth.accessToken.validity,
+      });
+      const refreshToken = jwt.sign(tokenPayload, config.auth.refreshToken.secret, {
+        expiresIn: config.auth.refreshToken.validity,
+      });
 
       return {
         accessToken,
