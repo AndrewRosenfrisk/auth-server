@@ -1,18 +1,18 @@
-const { Router } = require("express");
-const { celebrate, Joi } = require("celebrate");
-const { User } = require("../../models");
-const config = require("../../../config");
-const { AuthService } = require("../../services");
-const { authenticate } = require("../../middleware");
+const { Router } = require('express');
+const { celebrate, Joi } = require('celebrate');
+const { User } = require('../../models');
+const config = require('../../../config');
+const { AuthService } = require('../../services');
+const { authenticate } = require('../../middleware');
 
 const router = Router();
 const authService = new AuthService(User);
 
 module.exports = (routes) => {
-  routes.use("/auth", router);
+  routes.use('/auth', router);
 
   router.post(
-    "/register",
+    '/register',
     celebrate({
       body: Joi.object().keys({
         name: Joi.string().trim().required(),
@@ -23,8 +23,8 @@ module.exports = (routes) => {
     async (req, res, next) => {
       try {
         res.status(201).json({
-          status: "success",
-          message: "User registered!",
+          status: 'success',
+          message: 'User registered!',
           data: {
             user: await authService.register(req.body),
           },
@@ -32,11 +32,11 @@ module.exports = (routes) => {
       } catch (err) {
         next(err);
       }
-    }
+    },
   );
 
   router.post(
-    "/login",
+    '/login',
     celebrate({
       body: Joi.object().keys({
         email: Joi.string().email().trim().required(),
@@ -48,35 +48,35 @@ module.exports = (routes) => {
         const { accessToken, refreshToken } = await authService.login(req.body);
 
         res.cookie(
-          "refreshToken",
+          'refreshToken',
           refreshToken,
-          config.auth.refreshToken.cookie.options
+          config.auth.refreshToken.cookie.options,
         );
 
         res.status(200).json({
-          status: "success",
-          message: "User Logged In!",
+          status: 'success',
+          message: 'User Logged In!',
           accessToken,
         });
       } catch (err) {
         next(err);
       }
-    }
+    },
   );
 
-  router.post("/refresh", (req, res, next) => {
+  router.post('/refresh', (req, res, next) => {
     try {
       const { refreshToken } = req.cookies;
 
       if (!refreshToken) {
-        const err = new Error("Unauthorized!");
+        const err = new Error('Unauthorized!');
         err.status = 401;
         throw err;
       }
 
       res.status(200).json({
-        status: "success",
-        message: "Token Generated!",
+        status: 'success',
+        message: 'Token Generated!',
         accessToken: AuthService.refresh(refreshToken),
       });
     } catch (err) {
@@ -84,12 +84,12 @@ module.exports = (routes) => {
     }
   });
 
-  router.post("/logout", authenticate, (req, res) => {
-    res.clearCookie("refreshToken");
+  router.post('/logout', authenticate, (req, res) => {
+    res.clearCookie('refreshToken');
 
     res.status(200).json({
-      status: "success",
-      message: "Logged Out!",
+      status: 'success',
+      message: 'Logged Out!',
     });
   });
 };

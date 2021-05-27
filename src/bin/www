@@ -1,15 +1,15 @@
 // Module dependencies.
 
-const http = require("http");
-const mongoose = require("mongoose");
-const app = require("../app");
-const config = require("../config");
+const http = require('http');
+const mongoose = require('mongoose');
+const app = require('../app');
+const config = require('../config');
 
 // Get port from environment and store in Express.
 
 const { host } = config.app;
 const { port } = config.app;
-app.set("port", port);
+app.set('port', port);
 
 // Create HTTP server.
 
@@ -21,7 +21,7 @@ mongoose
   .connect(config.db.connectionString, config.db.connectionOptions)
   .catch((err) => console.log(err));
 
-mongoose.connection.on("error", (err) => {
+mongoose.connection.on('error', (err) => {
   console.log(err);
 });
 

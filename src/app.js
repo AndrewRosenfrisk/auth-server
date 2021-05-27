@@ -1,10 +1,10 @@
 // Module dependencies
-const cors = require("cors");
-require("pkginfo")(module, "name");
-const express = require("express");
-const { isCelebrateError } = require("celebrate");
-const cookieParser = require("cookie-parser");
-const config = require("./config");
+const cors = require('cors');
+require('pkginfo')(module, 'name');
+const express = require('express');
+const { isCelebrateError } = require('celebrate');
+const cookieParser = require('cookie-parser');
+const config = require('./config');
 
 // App initialization
 const app = express();
@@ -15,28 +15,25 @@ app.use(cors());
 app.use(cookieParser());
 
 // Route registration
-require("./routes")(app);
+require('./routes')(app);
 
 // 404 handler
 app.use((req, res, next) => {
-  const err = new Error("Not Found!");
+  const err = new Error('Not Found!');
   err.status = 404;
   next(err);
 });
 
 // Error handler registration.
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const status = isCelebrateError(err) ? 400 : err.status || 500;
-  const message =
-    config.app.env === "production" && err.status === 500
-      ? "Something Went Wrong!"
-      : err.message;
+  const message = config.app.env === 'production' && err.status === 500 ? 'Something Went Wrong!' : err.message;
 
   if (status === 500) console.log(err.stack);
 
   res.status(status).json({
-    status: status >= 500 ? "error" : "fail",
+    status: status >= 500 ? 'error' : 'fail',
     message,
   });
 });

@@ -16,5 +16,13 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.10",
     "pkginfo": "^0.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0"
   }
 }

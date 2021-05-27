@@ -1,7 +1,10 @@
-require("dotenv").config();
+require('dotenv').config();
+const app = require('./app');
+const db = require('./db');
+const auth = require('./auth');
 
 module.exports = {
-  app: require("./app"),
-  db: require("./db"),
-  auth: require("./auth"),
+  app,
+  db,
+  auth,
 };
